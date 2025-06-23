@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
 import { searchCEP } from '../../services/viacep';
@@ -11,6 +11,21 @@ export function Home() {
   const [displayName, setDisplayName] = useState<string>('');
   const [cep, setCep] = useState<string>('');
   const [updateContactId, setUpdateContactId] = useState<string | null>(null);
+
+  const [userFilter, setUserFilter] = useState('');
+  const [cityFilter, setCityFilter] = useState('');
+  const [ufFilter, setUfFilter] = useState('');
+  const [displaynameFilter, setDisplaynameFilter] = useState('');
+
+  const filteredUsers = useMemo(() => {
+    return contacts.filter((contact) => {
+      const matchUser = userFilter === '' || contact.user.toLocaleLowerCase().includes(userFilter.toLocaleLowerCase())
+      const matchCity = cityFilter === '' || contact.address.localidade.toLocaleLowerCase().includes(cityFilter.toLocaleLowerCase())
+      const matchUf = ufFilter === '' || contact.address.uf.toLocaleLowerCase().includes(ufFilter.toLocaleLowerCase())
+      const matchDisplayname = displaynameFilter === '' || contact.displayName.toLocaleLowerCase().includes(displaynameFilter.toLocaleLowerCase())
+      return matchUser && matchCity && matchUf && matchDisplayname;
+    });
+  }, [contacts, userFilter, cityFilter, ufFilter, displaynameFilter]);
 
   const handleSaveContact = async () => {
     try {
@@ -104,10 +119,37 @@ export function Home() {
       <div>
         <h1 className='text-xl font-bold mb-4'>Lista de contatos:</h1>
 
+        <div className='mb-6 space-y-2'>
+          <input
+            className='border p-2 mb-2 block w-full'
+            placeholder='Filtrar por usuário'
+            value={userFilter}
+            onChange={(e) => setUserFilter(e.target.value)}
+          />
+          <input
+            className='border p-2 mb-2 block w-full'
+            placeholder='Filtrar por cidade'
+            value={cityFilter}
+            onChange={(e) => setCityFilter(e.target.value)}
+          />
+          <input
+            className='border p-2 mb-2 block w-full'
+            placeholder='Filtrar por Estado'
+            value={ufFilter}
+            onChange={(e) => setUfFilter(e.target.value)}
+          />
+          <input
+            className='border p-2 mb-2 block w-full'
+            placeholder='Filtrar por apelido'
+            value={displaynameFilter}
+            onChange={(e) => setDisplaynameFilter(e.target.value)}
+          />
+        </div>
+
         {contacts.length === 0 && <p>Nenhum contato salvo. 😔</p>}
 
         <ul className='space-y-2'>
-          {contacts.map((contact) => (
+          {filteredUsers.map((contact) => (
             <li key={contact.id} className='border p-2 rounded-md shadow'>
               <p><strong>Contato:</strong> {contact.user}</p>
               <p><strong>Nome:</strong> {contact.displayName}</p>
