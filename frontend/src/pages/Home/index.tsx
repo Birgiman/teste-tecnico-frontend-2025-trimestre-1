@@ -3,30 +3,49 @@ import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
 import { searchCEP } from '../../services/viacep';
 import { Contact } from '../../types/Contact';
-import { deleteContacts, saveContacts, searchContacts } from '../../utils/storageContacts';
+import { deleteContacts, saveContacts, searchContacts, updateContact } from '../../utils/storageContacts';
 
 export function Home() {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [user, setUser] = useState<string>('');
   const [displayName, setDisplayName] = useState<string>('');
   const [cep, setCep] = useState<string>('');
+  const [updateContactId, setUpdateContactId] = useState<string | null>(null);
 
   const handleSaveContact = async () => {
     try {
       const address = await searchCEP(cep);
-      const newContact: Contact = {
-        id: uuidv4(),
-        user,
-        displayName,
-        cep,
-        address,
-      };
-      saveContacts(newContact);
-      setContacts(searchContacts());
-      setUser('');
-      setDisplayName('');
-      setCep('');
-      toast.success(`Contato ${displayName} salvo com sucesso!`);
+
+      if (updateContactId) {
+        const updatedContact: Contact = {
+          id: updateContactId,
+          user,
+          displayName,
+          cep,
+          address,
+        }
+        updateContact(updatedContact);
+        setContacts(searchContacts());
+        setUser('');
+        setDisplayName('');
+        setCep('');
+        toast.success(`Contato ${updatedContact.displayName} foi atualizado com sucesso!`)
+      } else {
+          const newContact: Contact = {
+          id: uuidv4(),
+          user,
+          displayName,
+          cep,
+          address,
+        };
+        saveContacts(newContact);
+        setContacts(searchContacts());
+        setUser('');
+        setDisplayName('');
+        setCep('');
+        toast.success(`Contato ${displayName} salvo com sucesso!`);
+      }
+
     } catch (error) {
       toast.error('Erro ao buscar CEP')
     }
@@ -68,6 +87,13 @@ export function Home() {
     toast.success(`Contato ${contactName} deletado com sucesso!`)
   }
 
+  const handleUpdateContact = (contact: Contact) => {
+    setUser(contact.user);
+    setDisplayName(contact.displayName);
+    setCep(contact.cep);
+    setUpdateContactId(contact.id);
+  }
+
   useEffect(() => {
     setContacts(searchContacts());
   }, []);
@@ -87,8 +113,11 @@ export function Home() {
               <p><strong>Nome:</strong> {contact.displayName}</p>
               <p><strong>CEP:</strong> {contact.cep}</p>
               <p><strong>Cidade:</strong> {contact.address.localidade} - {contact.address.uf}</p>
-              <button className='bg-red-400 text-white px-4 py-2 rounded-2xl hover:bg-red-500 uppercase' onClick={() => handleDelete(contact.id)}>
+              <button className='bg-red-400 text-white px-4 py-2 rounded-2xl hover:bg-red-600 uppercase' onClick={() => handleDelete(contact.id)}>
                 Deletar contato
+              </button>
+              <button className='bg-yellow-400 text-white px-4 py-2 rounded-2xl hover:bg-yellow-600' onClick={() => handleUpdateContact(contact)}>
+                Editar
               </button>
             </li>
           ))}
@@ -115,13 +144,13 @@ export function Home() {
           value={cep}
           onChange={(e) => setCep(e.target.value)}
         />
-        <button className='bg-green-400 text-white px-4 py-2 rounded-2xl hover:bg-green-500' onClick={handleSaveContact}>
-          Salvar Contato
+        <button className='bg-green-400 text-white px-4 py-2 rounded-2xl hover:bg-green-600' onClick={handleSaveContact}>
+          {updateContactId ? 'Salvar alterações' : 'Salvar contato'}
         </button>
       </div>
 
       <div>
-        <button className='bg-blue-400 text-white px-4 py-2 rounded-2xl hover:bg-blue-500' onClick={handleSearchCEP}>
+        <button className='bg-blue-400 text-white px-4 py-2 rounded-2xl hover:bg-blue-600' onClick={handleSearchCEP}>
           Buscar endereço da Praça da Sé
         </button>
       </div>
