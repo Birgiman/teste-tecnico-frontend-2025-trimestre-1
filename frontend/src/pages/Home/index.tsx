@@ -1,4 +1,5 @@
 import { ConfirmationModal } from '../../components/ConfirmationModal';
+import { ContactDetailsModal } from '../../components/ContactDetailsModal';
 import { ContactFilters } from '../../components/ContactFilters';
 import { ContactForm } from '../../components/ContactForm';
 import { ContactList } from '../../components/ContactList';
@@ -12,6 +13,7 @@ export function Home() {
     filters,
     handleSearchCEP,
     modal,
+    details,
   } = useHomeController()
 
   return (
@@ -30,8 +32,7 @@ export function Home() {
 
         <ContactList
           contacts={contacts.filteredUsers}
-          onDelete={contacts.handleDeleteClick}
-          onEdit={contacts.handleUpdateContact}
+          onDetails={details.handleViewDetails}
         />
       </div>
 
@@ -49,6 +50,14 @@ export function Home() {
         message={modal.message}
         onConfirm={modal.confirm}
         onCancel={modal.closeModal}
+      />
+
+      <ContactDetailsModal
+        isOpen={details.showDetailsModal}
+        contact={details.selectedContactDetails}
+        onClose={details.handleCloseDetails}
+        onDelete={contacts.handleDeleteClick}
+        onEdit={contacts.handleUpdateContact}
       />
 
       < TestNewUserHardcodeButton

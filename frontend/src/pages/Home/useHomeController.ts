@@ -12,6 +12,9 @@ export function useHomeController() {
   const [updateContactId, setUpdateContactId] = useState<string | null>(null);
   const [contactToEdit, setContactToEdit] = useState<ContactFormSchema | null>(null);
 
+  const [selectedContactDetails, setSelectedContactDetails] = useState<Contact | null>(null)
+  const [showDetailsModal, setShowDetailsModal] = useState(false)
+
   const [userFilter, setUserFilter] = useState('');
   const [cityFilter, setCityFilter] = useState('');
   const [ufFilter, setUfFilter] = useState('');
@@ -40,6 +43,7 @@ export function useHomeController() {
       confirmSaveContact(formData);
     }
   }
+
   const confirmUpdateContact = async (formData: ContactFormSchema) => {
     try {
       const address = await searchCEP(formData.cep);
@@ -65,7 +69,6 @@ export function useHomeController() {
       }
     }
   }
-
 
   const confirmSaveContact = async (formData: ContactFormSchema) => {
     try {
@@ -130,6 +133,7 @@ export function useHomeController() {
 
   const handleDeleteContact = (id: string) => {
     deleteContacts(id);
+    setShowDetailsModal(false)
     setContacts(searchContacts());
     const contactDisplayName = (contacts.map((contact) => (
       contact.displayName
@@ -139,12 +143,26 @@ export function useHomeController() {
 
   const handleUpdateContact = (contact: Contact) => {
     setUpdateContactId(contact.id)
+    setShowDetailsModal(false)
     setContactToEdit({
       user: contact.user,
       displayName: contact.displayName,
       cep: contact.cep,
     })
   }
+
+  function handleViewDetails(contact: Contact) {
+    setSelectedContactDetails(contact)
+    setShowDetailsModal(true)
+    setUpdateContactId(null)
+    setContactToEdit(null)
+  }
+
+  function handleCloseDetails() {
+    setShowDetailsModal(false)
+    setSelectedContactDetails(null)
+  }
+
 
   useEffect(() => {
     setContacts(searchContacts());
@@ -171,5 +189,11 @@ export function useHomeController() {
     },
     handleSearchCEP,
     modal,
+    details: {
+      selectedContactDetails,
+      showDetailsModal,
+      handleViewDetails,
+      handleCloseDetails,
+    }
   }
 }
