@@ -3,7 +3,7 @@ import { Contact } from '../types/Contact';
 
 interface ContactListProps {
   contacts: Contact[]
-  onDelete: (id: string) => void
+  onDelete: (contact: Contact) => void
   onEdit: (contact: Contact) => void
 }
 
@@ -25,7 +25,7 @@ export const ContactList: React.FC<ContactListProps> =({
               <p><strong>Nome:</strong> {contact.displayName}</p>
               <p><strong>CEP:</strong> {contact.cep}</p>
               <p><strong>Cidade:</strong> {contact.address.localidade} - {contact.address.uf}</p>
-              <button className='bg-red-400 text-white px-4 py-2 rounded-2xl hover:bg-red-600 uppercase' onClick={() => onDelete(contact.id)}>
+              <button className='bg-red-400 text-white px-4 py-2 rounded-2xl hover:bg-red-600 uppercase' onClick={() => onDelete(contact)}>
                 Deletar contato
               </button>
               <button className='bg-yellow-400 text-white px-4 py-2 rounded-2xl hover:bg-yellow-600' onClick={() => onEdit(contact)}>

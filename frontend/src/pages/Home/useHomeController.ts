@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
+import { useConfirmationModal } from '../../hooks/useConfirmationModal';
 import { ContactFormSchema } from '../../schemas/ContactFormSchema';
 import { searchCEP } from '../../services/viacep';
 import { Contact } from '../../types/Contact';
@@ -26,6 +27,8 @@ export function useHomeController() {
     });
   }, [contacts, userFilter, cityFilter, ufFilter, displaynameFilter]);
 
+  const modal = useConfirmationModal()
+
   const handleSaveContact = async (formData: ContactFormSchema) => {
     try {
       const address = await searchCEP(formData.cep);
@@ -44,7 +47,7 @@ export function useHomeController() {
         setContactToEdit(null);
         toast.success(`Contato ${updatedContact.displayName} foi atualizado com sucesso!`)
       } else {
-          const newContact: Contact = {
+        const newContact: Contact = {
           id: uuidv4(),
           user: formData.user,
           displayName: formData.displayName,
@@ -92,13 +95,23 @@ export function useHomeController() {
     }
   }
 
+  const handleDeleteClick = (contact: Contact) => {
+    modal.openModal({
+      title: 'Confirmar exclusão',
+      message: `Deseja realmente excluir o contato ${contact.displayName}?`,
+      onConfirm: () => {
+        handleDeleteContact(contact.id)
+      }
+    })
+  }
+
   const handleDeleteContact = (id: string) => {
     deleteContacts(id);
     setContacts(searchContacts());
-    const contactName = (contacts.map((contact) => (
-      contact.user
+    const contactDisplayName = (contacts.map((contact) => (
+      contact.displayName
     )));
-    toast.success(`Contato ${contactName} deletado com sucesso!`)
+    toast.success(`Contato ${contactDisplayName} deletado com sucesso!`)
   }
 
   const handleUpdateContact = (contact: Contact) => {
@@ -120,8 +133,8 @@ export function useHomeController() {
       updateContactId,
       contactToEdit,
       handleSaveContact,
-      handleDeleteContact,
       handleUpdateContact,
+      handleDeleteClick,
     },
     filters: {
       userFilter,
@@ -133,6 +146,7 @@ export function useHomeController() {
       setUfFilter,
       setDisplaynameFilter,
     },
-    handleSearchCEP
+    handleSearchCEP,
+    modal,
   }
 }
