@@ -39,7 +39,7 @@ export function Home() {
         <ContactForm
           isEditing={!!contacts.updateContactId}
           defaultValues={contacts.contactToEdit || undefined}
-          onSubmit={contacts.handleSaveContact}
+          onSubmit={contacts.handleSaveClick}
         />
       </div>
 

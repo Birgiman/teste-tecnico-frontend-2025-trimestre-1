@@ -29,35 +29,58 @@ export function useHomeController() {
 
   const modal = useConfirmationModal()
 
-  const handleSaveContact = async (formData: ContactFormSchema) => {
+  const handleSaveClick = async (formData: ContactFormSchema) => {
+    if (updateContactId) {
+      modal.openModal({
+      title: 'Confirmar alterações',
+      message: `Deseja realmente salvar as alterações?`,
+      onConfirm: () => confirmUpdateContact(formData)
+    })
+    } else {
+      confirmSaveContact(formData);
+    }
+  }
+  const confirmUpdateContact = async (formData: ContactFormSchema) => {
     try {
       const address = await searchCEP(formData.cep);
 
-      if (updateContactId) {
-        const updatedContact: Contact = {
-          id: updateContactId,
-          user: formData.user,
-          displayName: formData.displayName,
-          cep: formData.cep,
-          address,
-        }
-        updateContact(updatedContact);
-        setContacts(searchContacts());
-        setUpdateContactId(null);
-        setContactToEdit(null);
-        toast.success(`Contato ${updatedContact.displayName} foi atualizado com sucesso!`)
-      } else {
-        const newContact: Contact = {
-          id: uuidv4(),
-          user: formData.user,
-          displayName: formData.displayName,
-          cep: formData.cep,
-          address,
-        };
-        saveContacts(newContact);
-        setContacts(searchContacts());
-        toast.success(`Contato ${formData.displayName} salvo com sucesso!`);
+      const updatedContact: Contact = {
+        id: updateContactId!,
+        user: formData.user,
+        displayName: formData.displayName,
+        cep: formData.cep,
+        address,
       }
+      updateContact(updatedContact);
+      setContacts(searchContacts());
+      setUpdateContactId(null);
+      setContactToEdit(null);
+      toast.success(`Contato ${updatedContact.displayName} foi atualizado com sucesso!`)
+
+    } catch (error: any) {
+      if (error instanceof Error) {
+        toast.error(`Erro: ${error.message}`);
+      } else {
+        toast.error('Erro desconhecido.');
+      }
+    }
+  }
+
+
+  const confirmSaveContact = async (formData: ContactFormSchema) => {
+    try {
+      const address = await searchCEP(formData.cep);
+
+      const newContact: Contact = {
+        id: uuidv4(),
+        user: formData.user,
+        displayName: formData.displayName,
+        cep: formData.cep,
+        address,
+      };
+      saveContacts(newContact);
+      setContacts(searchContacts());
+      toast.success(`Contato ${formData.displayName} salvo com sucesso!`)
 
     } catch (error: any) {
       if (error instanceof Error) {
@@ -115,7 +138,7 @@ export function useHomeController() {
   }
 
   const handleUpdateContact = (contact: Contact) => {
-    setUpdateContactId(contact.id);
+    setUpdateContactId(contact.id)
     setContactToEdit({
       user: contact.user,
       displayName: contact.displayName,
@@ -132,7 +155,7 @@ export function useHomeController() {
       filteredUsers,
       updateContactId,
       contactToEdit,
-      handleSaveContact,
+      handleSaveClick,
       handleUpdateContact,
       handleDeleteClick,
     },
