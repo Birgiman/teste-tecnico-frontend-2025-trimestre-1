@@ -7,25 +7,8 @@ import { useHomeController } from './useHomeController';
 export function Home() {
 
   const {
-    user,
-    displayName,
-    cep,
-    updateContactId,
-    userFilter,
-    cityFilter,
-    ufFilter,
-    displaynameFilter,
-    filteredUsers,
-    setUser,
-    setDisplayName,
-    setCep,
-    setUserFilter,
-    setCityFilter,
-    setUfFilter,
-    setDisplaynameFilter,
-    handleSaveContact,
-    handleDeleteContact,
-    handleUpdateContact,
+    contacts,
+    filters,
     handleSearchCEP
   } = useHomeController()
 
@@ -33,33 +16,28 @@ export function Home() {
     <div className='flex justify-center items-center h-screen space-x-28'>
       <div>
         <ContactFilters
-          userFilter={userFilter}
-          cityFilter={cityFilter}
-          ufFilter={ufFilter}
-          displaynameFilter={displaynameFilter}
-          setUserFilter={setUserFilter}
-          setCityFilter={setCityFilter}
-          setUfFilter={setUfFilter}
-          setDisplaynameFilter={setDisplaynameFilter}
+          userFilter={filters.userFilter}
+          cityFilter={filters.cityFilter}
+          ufFilter={filters.ufFilter}
+          displaynameFilter={filters.displaynameFilter}
+          setUserFilter={filters.setUserFilter}
+          setCityFilter={filters.setCityFilter}
+          setUfFilter={filters.setUfFilter}
+          setDisplaynameFilter={filters.setDisplaynameFilter}
         />
 
         <ContactList
-          contacts={filteredUsers}
-          onDelete={handleDeleteContact}
-          onEdit={handleUpdateContact}
+          contacts={contacts.filteredUsers}
+          onDelete={contacts.handleDeleteContact}
+          onEdit={contacts.handleUpdateContact}
         />
       </div>
 
       <div>
         <ContactForm
-          user={user}
-          displayName={displayName}
-          cep={cep}
-          isEditing={!!updateContactId}
-          onChangeUser={setUser}
-          onChangeDisplayName={setDisplayName}
-          onChangeCep={setCep}
-          onSubmit={handleSaveContact}
+          isEditing={!!contacts.updateContactId}
+          defaultValues={contacts.contactToEdit || undefined}
+          onSubmit={contacts.handleSaveContact}
         />
       </div>
 

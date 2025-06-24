@@ -1,16 +1,15 @@
 import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
+import { ContactFormSchema } from '../../components/ContactForm';
 import { searchCEP } from '../../services/viacep';
 import { Contact } from '../../types/Contact';
 import { deleteContacts, saveContacts, searchContacts, updateContact } from '../../utils/storageContacts';
 
 export function useHomeController() {
   const [contacts, setContacts] = useState<Contact[]>([]);
-  const [user, setUser] = useState<string>('');
-  const [displayName, setDisplayName] = useState<string>('');
-  const [cep, setCep] = useState<string>('');
   const [updateContactId, setUpdateContactId] = useState<string | null>(null);
+  const [contactToEdit, setContactToEdit] = useState<ContactFormSchema | null>(null);
 
   const [userFilter, setUserFilter] = useState('');
   const [cityFilter, setCityFilter] = useState('');
@@ -27,42 +26,42 @@ export function useHomeController() {
     });
   }, [contacts, userFilter, cityFilter, ufFilter, displaynameFilter]);
 
-  const handleSaveContact = async () => {
+  const handleSaveContact = async (formData: ContactFormSchema) => {
     try {
-      const address = await searchCEP(cep);
+      const address = await searchCEP(formData.cep);
 
       if (updateContactId) {
         const updatedContact: Contact = {
           id: updateContactId,
-          user,
-          displayName,
-          cep,
+          user: formData.user,
+          displayName: formData.displayName,
+          cep: formData.cep,
           address,
         }
         updateContact(updatedContact);
         setContacts(searchContacts());
-        setUser('');
-        setDisplayName('');
-        setCep('');
+        setUpdateContactId(null);
+        setContactToEdit(null);
         toast.success(`Contato ${updatedContact.displayName} foi atualizado com sucesso!`)
       } else {
           const newContact: Contact = {
           id: uuidv4(),
-          user,
-          displayName,
-          cep,
+          user: formData.user,
+          displayName: formData.displayName,
+          cep: formData.cep,
           address,
         };
         saveContacts(newContact);
         setContacts(searchContacts());
-        setUser('');
-        setDisplayName('');
-        setCep('');
-        toast.success(`Contato ${displayName} salvo com sucesso!`);
+        toast.success(`Contato ${formData.displayName} salvo com sucesso!`);
       }
 
-    } catch (error) {
-      toast.error('Erro ao buscar CEP')
+    } catch (error: any) {
+      if (error instanceof Error) {
+        toast.error(`Erro: ${error.message}`);
+      } else {
+        toast.error('Erro desconhecido.');
+      }
     }
   }
 
@@ -103,10 +102,12 @@ export function useHomeController() {
   }
 
   const handleUpdateContact = (contact: Contact) => {
-    setUser(contact.user);
-    setDisplayName(contact.displayName);
-    setCep(contact.cep);
     setUpdateContactId(contact.id);
+    setContactToEdit({
+      user: contact.user,
+      displayName: contact.displayName,
+      cep: contact.cep,
+    })
   }
 
   useEffect(() => {
@@ -114,25 +115,24 @@ export function useHomeController() {
   }, []);
 
   return {
-    user,
-    displayName,
-    cep,
-    updateContactId,
-    userFilter,
-    cityFilter,
-    ufFilter,
-    displaynameFilter,
-    filteredUsers,
-    setUser,
-    setDisplayName,
-    setCep,
-    setUserFilter,
-    setCityFilter,
-    setUfFilter,
-    setDisplaynameFilter,
-    handleSaveContact,
-    handleDeleteContact,
-    handleUpdateContact,
+    contacts: {
+      filteredUsers,
+      updateContactId,
+      contactToEdit,
+      handleSaveContact,
+      handleDeleteContact,
+      handleUpdateContact,
+    },
+    filters: {
+      userFilter,
+      cityFilter,
+      ufFilter,
+      displaynameFilter,
+      setUserFilter,
+      setCityFilter,
+      setUfFilter,
+      setDisplaynameFilter,
+    },
     handleSearchCEP
   }
 }

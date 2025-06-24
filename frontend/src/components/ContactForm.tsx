@@ -1,53 +1,94 @@
-import React from 'react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect } from 'react'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+
+export type ContactFormSchema = z.infer<typeof contactFormSchema>
 
 interface ContactFormProps {
-  user: string
-  displayName: string
-  cep: string
+  defaultValues?: ContactFormSchema
   isEditing: boolean
-  onChangeUser: (value: string) => void
-  onChangeDisplayName: (value: string) => void
-  onChangeCep: (value: string) => void
-  onSubmit: () => void
+  onSubmit: (data: ContactFormSchema) => void
 }
 
-export const ContactForm: React.FC<ContactFormProps> = ({
-  user,
-  displayName,
-  cep,
-  isEditing,
-  onChangeUser,
-  onChangeDisplayName,
-  onChangeCep,
-  onSubmit,
-}) => {
-  return (
-    <div>
-      <h2 className='text-lg font-semibold mb-2'>
-        {isEditing ? 'Editar Contato' : 'Novo Contato'}
-      </h2>
-      <input
-          className='border p-2 mb-2 block w-full'
-          placeholder='Usuário'
-          value={user}
-          onChange={(e) => onChangeUser(e.target.value)}
-        />
-        <input
-          className='border p-2 mb-2 block w-full'
-          placeholder='Apelido'
-          value={displayName}
-          onChange={(e) => onChangeDisplayName(e.target.value)}
-        />
-        <input
-          className='border p-2 mb-2 block w-full'
-          placeholder='CEP'
-          value={cep}
-          onChange={(e) => onChangeCep(e.target.value)}
-        />
+export const contactFormSchema = z.object({
+  user: z.string().min(2, 'Usuário precisa ter no mínimo 2 caracteres'),
+  displayName: z.string().min(2, 'Apelido precisa ter no mínimo 2 caracteres'),
+  cep: z.string().regex(/^[0-9]{8}$/, 'CEP deve conter exatamente 8 dígitos numéricos'),
+})
 
-        <button className='bg-green-400 text-white px-4 py-2 rounded-2xl hover:bg-green-600' onClick={onSubmit}>
+
+export function ContactForm({
+  defaultValues,
+  isEditing,
+  onSubmit,
+}: ContactFormProps) {
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<ContactFormSchema>({
+    resolver: zodResolver(contactFormSchema),
+    mode: 'onChange',
+  })
+
+  useEffect(() => {
+    reset(defaultValues ?? {
+      user: '',
+      displayName: '',
+      cep: '',
+    })
+  }, [defaultValues, reset])
+
+  const submitHandler = (data: ContactFormSchema) => {
+    onSubmit(data)
+    reset()
+  }
+
+  return (
+    <form
+      onSubmit={handleSubmit(submitHandler)}
+      className='space-y-2 max-w-xs w-full'
+      noValidate
+    >
+      <div>
+        <div>
+          <input
+            {...register('user')}
+            className='border p-2 mb-2 block w-full'
+            placeholder='Usuário'
+          />
+          {errors.user && (
+            <p className='text-red-500 text-sm'>{errors.user.message}</p>
+          )}
+        </div>
+        <div>
+          <input
+            {...register('displayName')}
+            className='border p-2 mb-2 block w-full'
+            placeholder='Apelido'
+          />
+          {errors.displayName && (
+            <p className='text-red-500 text-sm'>{errors.displayName.message}</p>
+          )}
+        </div>
+        <div>
+          <input
+            {...register('cep')}
+            className='border p-2 mb-2 block w-full'
+            placeholder='CEP'
+          />
+          {errors.cep && (
+            <p className='text-red-500 text-sm'>{errors.cep.message}</p>
+          )}
+        </div>
+
+        <button className='bg-green-400 text-white px-4 py-2 rounded-2xl hover:bg-green-600'>
           {isEditing ? 'Salvar alterações' : 'Salvar contato'}
         </button>
-    </div>
+      </div>
+    </form>
   )
 }
