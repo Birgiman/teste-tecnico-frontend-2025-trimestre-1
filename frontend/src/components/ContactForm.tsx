@@ -1,9 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
+import { contactFormSchema, ContactFormSchema } from '../schemas/ContactFormSchema'
 
-export type ContactFormSchema = z.infer<typeof contactFormSchema>
+// export type ContactFormSchema = z.infer<typeof contactFormSchema>
 
 interface ContactFormProps {
   defaultValues?: ContactFormSchema
@@ -11,11 +11,11 @@ interface ContactFormProps {
   onSubmit: (data: ContactFormSchema) => void
 }
 
-export const contactFormSchema = z.object({
-  user: z.string().min(2, 'Usuário precisa ter no mínimo 2 caracteres'),
-  displayName: z.string().min(2, 'Apelido precisa ter no mínimo 2 caracteres'),
-  cep: z.string().regex(/^[0-9]{8}$/, 'CEP deve conter exatamente 8 dígitos numéricos'),
-})
+// export const contactFormSchema = z.object({
+//   user: z.string().min(2, 'Usuário precisa ter no mínimo 2 caracteres'),
+//   displayName: z.string().min(2, 'Apelido precisa ter no mínimo 2 caracteres'),
+//   cep: z.string().regex(/^[0-9]{8}$/, 'CEP deve conter exatamente 8 dígitos numéricos'),
+// })
 
 
 export function ContactForm({

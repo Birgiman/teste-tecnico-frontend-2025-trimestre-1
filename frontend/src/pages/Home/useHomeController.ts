@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
-import { ContactFormSchema } from '../../components/ContactForm';
+import { ContactFormSchema } from '../../schemas/ContactFormSchema';
 import { searchCEP } from '../../services/viacep';
 import { Contact } from '../../types/Contact';
 import { deleteContacts, saveContacts, searchContacts, updateContact } from '../../utils/storageContacts';
