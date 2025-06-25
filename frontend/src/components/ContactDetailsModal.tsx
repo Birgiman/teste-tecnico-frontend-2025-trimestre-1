@@ -1,3 +1,4 @@
+import { PencilSimple, Trash, X } from 'phosphor-react'
 import { Contact } from '../types/Contact'
 import { Button } from './Button'
 
@@ -36,19 +37,25 @@ export function ContactDetailsModal({ isOpen, contact, onClose, onDelete, onEdit
             onClick={() => onDelete(contact)}
             variant='danger'
           >
-            Deletar contato
+            <Trash
+              size={20}
+            />
           </Button>
           <Button
             onClick={() => onEdit(contact)}
             variant='primary'
           >
-            Editar
+            <PencilSimple
+              size={20}
+            />
           </Button>
           <Button
             onClick={onClose}
             variant='secundary'
           >
-            Fechar
+            <X
+              size={20}
+            />
           </Button>
         </div>
       </div>

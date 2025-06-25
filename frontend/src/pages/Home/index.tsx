@@ -3,7 +3,6 @@ import { ContactDetailsModal } from '../../components/ContactDetailsModal';
 import { ContactFilters } from '../../components/ContactFilters';
 import { ContactForm } from '../../components/ContactForm';
 import { ContactList } from '../../components/ContactList';
-import { TestNewUserHardcodeButton } from '../../debug/TestCepButton';
 import { useHomeController } from './useHomeController';
 
 export function Home() {
@@ -18,7 +17,7 @@ export function Home() {
 
   return (
     <div className='flex justify-center items-center h-screen space-x-28'>
-      <div>
+
         <ContactFilters
           userFilter={filters.userFilter}
           cityFilter={filters.cityFilter}
@@ -34,15 +33,15 @@ export function Home() {
           contacts={contacts.filteredUsers}
           onDetails={details.handleViewDetails}
         />
-      </div>
 
-      <div>
+
+
         <ContactForm
           isEditing={!!contacts.updateContactId}
           defaultValues={contacts.contactToEdit || undefined}
           onSubmit={contacts.handleSaveClick}
         />
-      </div>
+
 
       <ConfirmationModal
         isOpen={modal.isOpen}
@@ -60,9 +59,9 @@ export function Home() {
         onEdit={contacts.handleUpdateContact}
       />
 
-      < TestNewUserHardcodeButton
+      {/* < TestNewUserHardcodeButton
         onSearch={handleSearchCEP}
-      />
+      /> */}
     </div>
   )
 }

@@ -10,9 +10,9 @@ export const Button: React.FC<ButtonProps> = ({
   const baseStyle = 'px-4 py-2 rounded-2xl text-white font-medium transition-colors duration-200';
 
   const variants = {
-    primary: 'bg-blue-500 hover:bg-blue-600 dark:bg-gray-600 dark:hover:bg-gray-500',
-    danger: 'bg-red-500 hover:bg-red-600 dark:bg-gray-700 dark:hover:bg-gray-600',
-    secundary: 'bg-gray-500 hover:bg-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600',
+    primary: 'bg-primary hover:bg-primary-hover',
+    danger: 'bg-danger hover:bg-danger-danger',
+    secundary: 'bg-secondary hover:bg-secondary-hover',
     clear: 'rounded-full hover:bg-gray-700/80 dark:hover:bg-white',
   };
 

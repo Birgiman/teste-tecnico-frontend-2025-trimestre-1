@@ -1,7 +1,43 @@
 @import "tailwindcss";
 
-@theme {
+@import "tailwindcss";
 
+@theme {
+  --color-base: #f4f4f5;               /* zinc-100 */
+  --color-base-foreground: #0f172a;    /* zinc-900 */
+
+  --color-primary: #3b82f6;            /* blue-500 */
+  --color-primary-hover: #2563eb;      /* blue-600 */
+
+  --color-danger: #ef4444;             /* red-500 */
+  --color-danger-hover: #dc2626;       /* red-600 */
+
+  --color-secondary: #6b7280;          /* gray-500 */
+  --color-secondary-hover: #4b5563;    /* gray-600 */
+
+  --color-border: #d1d5db;             /* zinc-300 */
+  --color-placeholder: #9ca3af;        /* zinc-400 */
+  --color-border-error: #ef4444;       /* red-500 */
 }
+
+.dark {
+  --color-base: #27272a;               /* zinc-800 */
+  --color-base-foreground: #f4f4f5;    /* zinc-100 */
+
+  --color-primary: #4b5563;            /* gray-600 */
+  --color-primary-hover: #6b7280;      /* gray-500 */
+
+  --color-danger: #374151;             /* gray-700 */
+  --color-danger-hover: #4b5563;       /* gray-600 */
+
+  --color-secondary: #374151;          /* gray-700 */
+  --color-secondary-hover: #4b5563;    /* gray-600 */
+
+  --color-border: #374151;             /* zinc-700 */
+  --color-placeholder: #6b7280;        /* zinc-500 */
+  --color-border-error: #f87171;       /* red-400 */
+}
+
+
 
 @custom-variant dark (&:where(.dark, .dark *));
