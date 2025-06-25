@@ -1,4 +1,5 @@
 import { Contact } from '../types/Contact'
+import { Button } from './Button'
 
 interface ContactDetailsModalProps {
   isOpen: boolean
@@ -31,18 +32,24 @@ export function ContactDetailsModal({ isOpen, contact, onClose, onDelete, onEdit
           <p><strong>Estado:</strong>{address.uf}</p>
         </div>
         <div className='flex justify-end space-x-2'>
-          <button className='bg-red-400 text-white px-4 py-2 rounded-2xl hover:bg-red-600 uppercase' onClick={() => onDelete(contact)}>
-                Deletar contato
-              </button>
-              <button className='bg-yellow-400 text-white px-4 py-2 rounded-2xl hover:bg-yellow-600' onClick={() => onEdit(contact)}>
-                Editar
-              </button>
-          <button
+          <Button
+            onClick={() => onDelete(contact)}
+            variant='danger'
+          >
+            Deletar contato
+          </Button>
+          <Button
+            onClick={() => onEdit(contact)}
+            variant='primary'
+          >
+            Editar
+          </Button>
+          <Button
             onClick={onClose}
-            className='px-4 py-2 text-gray-500 rounded-full'
+            variant='secundary'
           >
             Fechar
-          </button>
+          </Button>
         </div>
       </div>
     </div>

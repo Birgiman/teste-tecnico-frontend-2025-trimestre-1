@@ -1,5 +1,6 @@
 import React from 'react';
 import { Contact } from '../types/Contact';
+import { Button } from './Button';
 
 interface ContactListProps {
   contacts: Contact[]
@@ -26,9 +27,12 @@ export const ContactList: React.FC<ContactListProps> =({
                 <p><strong>Cidade:</strong> {contact.address.localidade} - {contact.address.uf}</p>
               </div>
               <div className='flex items-center justify-center'>
-                <button className='bg-gray-400 text-white px-4 py-2 rounded-2xl hover:bg-gray-600' onClick={() => onDetails(contact)}>
+                <Button
+                  onClick={() => onDetails(contact)}
+                  variant='secundary'
+                >
                   Detalhes
-                </button>
+                </Button>
               </div>
             </li>
           ))}

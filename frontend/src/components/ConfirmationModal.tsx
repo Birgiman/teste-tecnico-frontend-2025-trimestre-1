@@ -1,3 +1,5 @@
+import { Button } from './Button'
+
 interface ConfirmationModalProps {
   isOpen: boolean
   title: string
@@ -20,19 +22,19 @@ export function ConfirmationModal({
       <div className='bg-white rounded-xl shadow-xl p-6 w-full max-w-md'>
         <h2 className='text-xl font-semibold mb-2'>{title}</h2>
         <p className='text-gray-700 mb-4'>{message}</p>
-        <div className='flex justify-end space-x-2'>
-          <button
+        <div className='flex justify-between space-x-2'>
+          <Button
             onClick={onCancel}
-            className='px-4 py-2 bg-gray-300 rounded-full hover:bg-gray-400'
+            variant='secundary'
           >
             Cancelar
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={onConfirm}
-            className='px-4 py-2 bg-red-300 rounded-full hover:bg-red-400'
+            variant='danger'
           >
             Confirmar
-          </button>
+          </Button>
         </div>
       </div>
     </div>

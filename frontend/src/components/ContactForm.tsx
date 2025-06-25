@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { contactFormSchema, ContactFormSchema } from '../schemas/ContactFormSchema'
+import { Button } from './Button'
 
 interface ContactFormProps {
   defaultValues?: ContactFormSchema
@@ -75,10 +76,11 @@ export function ContactForm({
             <p className='text-red-500 text-sm'>{errors.cep.message}</p>
           )}
         </div>
-
-        <button className='bg-green-400 text-white px-4 py-2 rounded-2xl hover:bg-green-600'>
+        <Button
+          variant='primary'
+        >
           {isEditing ? 'Salvar alterações' : 'Salvar contato'}
-        </button>
+        </Button>
       </div>
     </form>
   )
