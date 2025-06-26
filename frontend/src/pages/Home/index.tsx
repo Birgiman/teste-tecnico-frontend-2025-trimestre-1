@@ -10,7 +10,6 @@ export function Home() {
   const {
     contacts,
     filters,
-    handleSearchCEP,
     modal,
     details,
   } = useHomeController()
@@ -47,24 +46,20 @@ export function Home() {
           onSubmit={contacts.handleSaveClick}
         />
       </div>
-
-          <ContactDetailsModal
-            isOpen={details.showDetailsModal}
-            contact={details.selectedContactDetails}
-            onClose={details.handleCloseDetails}
-            onDelete={contacts.handleDeleteClick}
-            onEdit={contacts.handleUpdateContact}
-          />
-          <ConfirmationModal
-            isOpen={modal.isOpen}
-            title={modal.title}
-            message={modal.message}
-            onConfirm={modal.confirm}
-            onCancel={modal.closeModal}
-          />
-      {/* < TestNewUserHardcodeButton
-        onSearch={handleSearchCEP}
-      /> */}
+      <ContactDetailsModal
+        isOpen={details.showDetailsModal}
+        contact={details.selectedContactDetails}
+        onClose={details.handleCloseDetails}
+        onDelete={contacts.handleDeleteClick}
+        onEdit={contacts.handleUpdateContact}
+      />
+       <ConfirmationModal
+        isOpen={modal.isOpen}
+        title={modal.title}
+        message={modal.message}
+        onConfirm={modal.confirm}
+        onCancel={modal.closeModal}
+      />
     </div>
   )
 }

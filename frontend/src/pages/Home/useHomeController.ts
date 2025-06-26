@@ -5,6 +5,7 @@ import { useConfirmationModal } from '../../hooks/useConfirmationModal';
 import { ContactFormSchema } from '../../schemas/ContactFormSchema';
 import { searchCEP } from '../../services/viacep';
 import { Contact } from '../../types/Contact';
+import { normalize } from '../../utils/normalize';
 import { deleteContacts, saveContacts, searchContacts, updateContact } from '../../utils/storageContacts';
 
 export function useHomeController() {
@@ -22,10 +23,10 @@ export function useHomeController() {
 
   const filteredUsers = useMemo(() => {
     return contacts.filter((contact) => {
-      const matchUser = userFilter === '' || contact.user.toLocaleLowerCase().includes(userFilter.toLocaleLowerCase())
-      const matchCity = cityFilter === '' || contact.address.localidade.toLocaleLowerCase().includes(cityFilter.toLocaleLowerCase())
-      const matchUf = ufFilter === '' || contact.address.uf.toLocaleLowerCase().includes(ufFilter.toLocaleLowerCase())
-      const matchDisplayname = displaynameFilter === '' || contact.displayName.toLocaleLowerCase().includes(displaynameFilter.toLocaleLowerCase())
+      const matchUser = userFilter === '' || normalize(contact.user).includes(userFilter)
+      const matchCity = cityFilter === '' || normalize(contact.address.localidade).includes(cityFilter)
+      const matchUf = ufFilter === '' || normalize(contact.address.uf).includes(ufFilter)
+      const matchDisplayname = displaynameFilter === '' || normalize(contact.displayName).includes(displaynameFilter)
       return matchUser && matchCity && matchUf && matchDisplayname;
     });
   }, [contacts, userFilter, cityFilter, ufFilter, displaynameFilter]);
@@ -84,32 +85,6 @@ export function useHomeController() {
       saveContacts(newContact);
       setContacts(searchContacts());
       toast.success(`Contato ${formData.displayName} salvo com sucesso!`)
-
-    } catch (error: any) {
-      if (error instanceof Error) {
-        toast.error(`Erro: ${error.message}`);
-      } else {
-        toast.error('Erro desconhecido.');
-      }
-    }
-  }
-
-  const handleSearchCEP = async (): Promise<void> => {
-    try {
-      const address = await searchCEP('')
-      toast.success('Endereço encontrado!');
-
-      const newContact: Contact = {
-        id: uuidv4(),
-        user: 'Teste',
-        displayName: 'Teste de displayName',
-        cep: address.cep,
-        address: address
-      }
-
-      saveContacts(newContact);
-      setContacts(searchContacts());
-      toast.success(`Contato ${newContact.user} salvo com sucesso!`)
 
     } catch (error: any) {
       if (error instanceof Error) {
@@ -186,7 +161,6 @@ export function useHomeController() {
       setUfFilter,
       setDisplaynameFilter,
     },
-    handleSearchCEP,
     modal,
     details: {
       selectedContactDetails,
