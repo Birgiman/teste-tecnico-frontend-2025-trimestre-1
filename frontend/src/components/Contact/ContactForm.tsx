@@ -2,9 +2,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Check, ListPlus } from 'phosphor-react'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { contactFormSchema, ContactFormSchema } from '../schemas/ContactFormSchema'
-import { Button } from './Button'
-import { InputField } from './InputFilds'
+import { contactFormSchema, ContactFormSchema } from '../../schemas/ContactFormSchema'
+import { Button } from '../Button'
+import { InputField } from '../InputFilds'
 
 interface ContactFormProps {
   defaultValues?: ContactFormSchema
@@ -47,7 +47,7 @@ export function ContactForm({
       className='flex items-center justify-center space-y-2 w-full h-screen p-4'
       noValidate
     >
-      <div className='p-2 border rounded-lg border-base-foreground w-full min-w-80 max-w-9/12'>
+      <div className='p-2 border rounded-lg border-base-foreground w-full min-h-80 min-w-80 max-w-9/12'>
         <div className='flex items-center justify-between py-2 text-zinc-800 bg-zinc-300 dark:text-zinc-50 dark:bg-zinc-600 px-2 rounded-t-lg'>
           <h2 className='uppercase text-2xl'>{isEditing ? 'Editar Contato' : 'Novo Contato'}</h2>
           <ListPlus size={28} />

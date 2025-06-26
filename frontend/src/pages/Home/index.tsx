@@ -1,8 +1,8 @@
 import { ConfirmationModal } from '../../components/ConfirmationModal';
-import { ContactDetailsModal } from '../../components/ContactDetailsModal';
-import { ContactFilters } from '../../components/ContactFilters';
-import { ContactForm } from '../../components/ContactForm';
-import { ContactList } from '../../components/ContactList';
+import { ContactDetailsModal } from '../../components/Contact/ContactDetailsModal';
+import { ContactFilters } from '../../components/Contact/ContactFilters';
+import { ContactForm } from '../../components/Contact/ContactForm';
+import { ContactList } from '../../components/Contact/ContactList';
 import { useHomeController } from './useHomeController';
 
 export function Home() {
@@ -16,7 +16,7 @@ export function Home() {
 
   return (
     <div className='flex justify-between items-center mx-4'>
-      <div className='w-full p-4 border rounded-lg border-base-foreground'>
+      <div className='w-full p-4 border rounded-lg border-base-foreground min-h-[370px]'>
         <div className='flex justify-center items-center'>
           <ContactFilters
             userFilter={filters.userFilter}

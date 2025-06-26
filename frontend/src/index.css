@@ -16,6 +16,8 @@
 
   --color-header: #d1d5db;             /* zinc-300 */
 
+  --color-theme-animation: #0f172a;    /* zinc-900 */
+
   --color-secondary: #6b7280;          /* gray-500 */
   --color-secondary-hover: #4b5563;    /* gray-600 */
 
@@ -37,6 +39,8 @@
   --color-internal: #3a3a40;           /* zinc-700/80 */
 
   --color-header: #3a3a40;             /* zinc-700/80 */
+
+  --color-theme-animation: #ffffff;    /* white */
 
   --color-secondary: #374151;          /* gray-700 */
   --color-secondary-hover: #4b5563;    /* gray-600 */

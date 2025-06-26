@@ -19,8 +19,8 @@ export function ThemeTransiction({ trigger }: {trigger: boolean}) {
           initial={{ x: '-100%', skewX: '-15deg' }}
           animate={{ x: '120%', skewX: '-15deg' }}
           exit={{ opacity: 10 }}
-          transition={{ duration: 0.8, ease: 'easeInOut' }}
-          className='fixed inset-0 z-50 bg-base pointer-events-none'
+          transition={{ duration: 1, ease: 'easeInOut' }}
+          className='fixed inset-0 z-50 bg-base border-2 border-theme-animation pointer-events-none'
           style={{
             transformOrigin: 'left',
           }}

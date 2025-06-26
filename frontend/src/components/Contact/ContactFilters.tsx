@@ -1,6 +1,6 @@
 import { Funnel } from 'phosphor-react'
 import React from 'react'
-import { InputField } from './InputFilds'
+import { InputField } from '../InputFilds'
 
 interface ContactFilterProps {
   userFilter: string

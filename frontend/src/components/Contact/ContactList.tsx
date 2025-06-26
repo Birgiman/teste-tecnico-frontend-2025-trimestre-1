@@ -13,7 +13,11 @@ export const ContactList: React.FC<ContactListProps> =({
 }) => {
 
   if (contacts.length === 0) {
-    return <p>Nenhum contato salvo. 😔</p>
+    return (
+      <div className='flex items-center justify-center text-base-foreground font-bold animate-bounce '>
+        <p>Nenhum contato salvo. 😔</p>
+      </div>
+    )
   }
 
   return (
