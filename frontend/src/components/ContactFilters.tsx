@@ -1,4 +1,6 @@
+import { Funnel } from 'phosphor-react'
 import React from 'react'
+import { InputField } from './InputFilds'
 
 interface ContactFilterProps {
   userFilter: string
@@ -22,32 +24,31 @@ export const ContactFilters: React.FC<ContactFilterProps> = ({
   setDisplaynameFilter,
 }) => {
   return (
-    <div>
-      <h1 className='text-xl font-bold mb-4'>Lista de contatos:</h1>
+    <div className='space-y-2 max-w-xs w-full'>
+      <div className='flex items-center justify-between py-2 text-zinc-800 bg-zinc-300 dark:text-zinc-50 dark:bg-zinc-600 px-2 rounded-t-lg'>
+          <h2 className='uppercase text-2xl'>Filtrar contatos</h2>
+          <Funnel size={28} />
+        </div>
         <div className='mb-6 space-y-2'>
-          <input
-            className='border p-2 mb-2 block w-full'
+          <InputField
             placeholder='Filtrar por usuário'
             value={userFilter}
             onChange={(e) => setUserFilter(e.target.value)}
           />
-          <input
-            className='border p-2 mb-2 block w-full'
+          <InputField
+            placeholder='Filtrar por apelido'
+            value={displaynameFilter}
+            onChange={(e) => setDisplaynameFilter(e.target.value)}
+          />
+          <InputField
             placeholder='Filtrar por cidade'
             value={cityFilter}
             onChange={(e) => setCityFilter(e.target.value)}
           />
-          <input
-            className='border p-2 mb-2 block w-full'
-            placeholder='Filtrar por Estado'
+          <InputField
+            placeholder='Filtrar por estado'
             value={ufFilter}
             onChange={(e) => setUfFilter(e.target.value)}
-          />
-          <input
-            className='border p-2 mb-2 block w-full'
-            placeholder='Filtrar por apelido'
-            value={displaynameFilter}
-            onChange={(e) => setDisplaynameFilter(e.target.value)}
           />
         </div>
     </div>

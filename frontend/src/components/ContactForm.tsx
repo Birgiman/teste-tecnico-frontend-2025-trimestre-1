@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { contactFormSchema, ContactFormSchema } from '../schemas/ContactFormSchema'
 import { Button } from './Button'
-import { InputField } from './form/InputFilds'
+import { InputField } from './InputFilds'
 
 interface ContactFormProps {
   defaultValues?: ContactFormSchema

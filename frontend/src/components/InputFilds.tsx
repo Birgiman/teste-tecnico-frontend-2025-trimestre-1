@@ -5,7 +5,7 @@ import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string
   error?: FieldError
-  registration: UseFormRegisterReturn
+  registration?: UseFormRegisterReturn
 }
 
 export function InputField({ label, error, registration, ...props }: InputFieldProps) {
