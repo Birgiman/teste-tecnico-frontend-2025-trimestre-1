@@ -1,6 +1,6 @@
 import React from 'react';
-import { Contact } from '../types/Contact';
-import { Button } from './Button';
+import { Contact } from '../../types/Contact';
+import { Button } from '../Button';
 
 interface ContactListProps {
   contacts: Contact[]

@@ -1,6 +1,6 @@
 import { PencilSimple, Trash, X } from 'phosphor-react'
-import { Contact } from '../types/Contact'
-import { Button } from './Button'
+import { Contact } from '../../types/Contact'
+import { Button } from '../Button'
 
 interface ContactDetailsModalProps {
   isOpen: boolean

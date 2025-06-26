@@ -1,6 +1,7 @@
-import { useTheme } from '../hooks/useTheme';
-import { Button } from './Button';
-import { ThemeTransiction } from './ThemeTransition';
+import { useTheme } from '../../hooks/useTheme'
+import { Button } from '../Button'
+import { ThemeTransiction } from './ThemeTransition'
+
 
 export function ThemeToggleButton() {
   const { theme, toogleTheme, triggerTransition, disable } = useTheme()
