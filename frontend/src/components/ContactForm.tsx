@@ -49,7 +49,7 @@ export function ContactForm({
     >
       <div className='p-2 border rounded-lg border-base-foreground w-full min-w-80 max-w-9/12'>
         <div className='flex items-center justify-between py-2 text-zinc-800 bg-zinc-300 dark:text-zinc-50 dark:bg-zinc-600 px-2 rounded-t-lg'>
-          <h2 className='uppercase text-2xl'>Novo contato</h2>
+          <h2 className='uppercase text-2xl'>{isEditing ? 'Editar Contato' : 'Novo Contato'}</h2>
           <ListPlus size={28} />
         </div>
         <div className='space-y-4 p-2 rounded-b-lg bg-zinc-200 dark:bg-zinc-700/80'>

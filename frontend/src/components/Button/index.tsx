@@ -11,9 +11,9 @@ export const Button: React.FC<ButtonProps> = ({
 
   const variants = {
     primary: 'bg-primary hover:bg-primary-hover',
-    danger: 'bg-danger hover:bg-danger-danger',
+    danger: 'bg-danger hover:bg-danger-hover',
     secundary: 'bg-secondary hover:bg-secondary-hover',
-    clear: 'rounded-full hover:bg-gray-700/80 dark:hover:bg-white',
+    clear: 'rounded-full transform transition-transform duration-200 hover:scale-135 ease-in-out',
   };
 
   return (

@@ -46,7 +46,7 @@ export const ContactFilters: React.FC<ContactFilterProps> = ({
             onChange={(e) => setCityFilter(e.target.value)}
           />
           <InputField
-            placeholder='Filtrar por estado'
+            placeholder='Filtrar por estado (UF)'
             value={ufFilter}
             onChange={(e) => setUfFilter(e.target.value)}
           />
