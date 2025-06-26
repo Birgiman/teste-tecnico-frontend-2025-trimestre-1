@@ -6,7 +6,14 @@ export function useTheme() {
     return getSaveTheme() ?? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
   })
 
+  const [triggerTransition, setTriggerTransition] = useState(false)
+  const [disable, setDisable] = useState(false)
+
   const toogleTheme = () => {
+
+    if (disable) return
+    setDisable(true)
+    setTriggerTransition(true)
     setTheme(prev => (prev === 'dark' ? 'light' : 'dark'))
   }
 
@@ -18,6 +25,16 @@ export function useTheme() {
 
   }, [theme])
 
-  return { theme, toogleTheme }
+  useEffect(() => {
+    if (!triggerTransition) return
+
+    const timeout = setTimeout(() => {
+      setTriggerTransition(false)
+      setDisable(false)
+    }, 1500)
+    return () => clearTimeout(timeout)
+  }, [triggerTransition])
+
+  return { theme, toogleTheme, triggerTransition, disable }
 
 }

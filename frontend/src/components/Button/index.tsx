@@ -18,7 +18,7 @@ export const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
-      className={clsx(baseStyle, variants[variant], className)}
+      className={clsx(baseStyle, variants[variant], className, props.disabled && 'opacity-50 cursor-not-allowed')}
       {...props}
     >
       {children}

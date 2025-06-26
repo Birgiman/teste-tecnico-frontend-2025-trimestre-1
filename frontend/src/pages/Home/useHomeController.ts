@@ -96,8 +96,7 @@ export function useHomeController() {
 
   const handleSearchCEP = async (): Promise<void> => {
     try {
-      const address = await searchCEP('01001000') // CEP da Praça da Sé, exemplo sugerido na documentação do ViaCEP
-      console.log('Resultado da busca do CEP:', address);
+      const address = await searchCEP('')
       toast.success('Endereço encontrado!');
 
       const newContact: Contact = {
