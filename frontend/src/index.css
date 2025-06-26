@@ -12,6 +12,8 @@
   --color-danger: #ef4444;             /* red-500 */
   --color-danger-hover: #dc2626;       /* red-600 */
 
+  --color-internal: #dfe0e0;           /* zinc-100/90 */
+
   --color-secondary: #6b7280;          /* gray-500 */
   --color-secondary-hover: #4b5563;    /* gray-600 */
 
@@ -27,8 +29,10 @@
   --color-primary: #4b5563;            /* gray-600 */
   --color-primary-hover: #6b7280;      /* gray-500 */
 
-  --color-danger: #374151;             /* gray-700 */
-  --color-danger-hover: #4b5563;       /* gray-600 */
+  --color-danger: #ef4444;             /* gray-700 */
+  --color-danger-hover: #dc2626;       /* gray-600 */
+
+  --color-internal: #3a3a40;           /* zinc-700/80 */
 
   --color-secondary: #374151;          /* gray-700 */
   --color-secondary-hover: #4b5563;    /* gray-600 */

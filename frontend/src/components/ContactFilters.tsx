@@ -24,7 +24,7 @@ export const ContactFilters: React.FC<ContactFilterProps> = ({
   setDisplaynameFilter,
 }) => {
   return (
-    <div className='space-y-2 max-w-xs w-full'>
+    <div className='space-y-2 w-full min-w-80 max-w-7/12'>
       <div className='flex items-center justify-between py-2 text-zinc-800 bg-zinc-300 dark:text-zinc-50 dark:bg-zinc-600 px-2 rounded-t-lg'>
           <h2 className='uppercase text-2xl'>Filtrar contatos</h2>
           <Funnel size={28} />

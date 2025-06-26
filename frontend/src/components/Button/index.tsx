@@ -7,7 +7,7 @@ export const Button: React.FC<ButtonProps> = ({
   className,
   ...props
 }) => {
-  const baseStyle = 'px-4 py-2 rounded-2xl text-white font-medium transition-colors duration-200';
+  const baseStyle = 'px-4 py-2 rounded-2xl text-white font-medium border transition-colors duration-200';
 
   const variants = {
     primary: 'bg-primary hover:bg-primary-hover',

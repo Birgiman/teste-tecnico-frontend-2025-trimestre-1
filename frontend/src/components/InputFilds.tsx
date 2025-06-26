@@ -10,7 +10,7 @@ interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
 
 export function InputField({ label, error, registration, ...props }: InputFieldProps) {
   return (
-    <div className='space-y-1'>
+    <div className='space-y-1 w-full'>
       {label && (
         <label className='block text-sm font-medium text-base-foreground'>
           {label}
@@ -20,7 +20,7 @@ export function InputField({ label, error, registration, ...props }: InputFieldP
         {...registration}
         {...props}
         className={clsx(
-          'w-full px-4 py-2 border rounded-lg bg-base',
+          'w-full px-4 py-2 border rounded-lg bg-base hover:bg-zinc-200 dark:hover:bg-zinc-600',
           'text-base-foreground placeholder:text-placeholder',
           'focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors',
           {

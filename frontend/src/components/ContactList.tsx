@@ -17,9 +17,9 @@ export const ContactList: React.FC<ContactListProps> =({
   }
 
   return (
-        <ul className='space-y-2'>
+        <ul className='space-y-2 w-full overflow-y-auto max-h-[550px]'>
           {contacts.map((contact) => (
-            <li key={contact.id} className='border p-2 rounded-md shadow'>
+            <li key={contact.id} className='flex items-center justify-between border p-2 rounded-md space-y-4 rounded-b-lg bg-internal text-base-foreground shadow'>
               <div>
                 <p><strong>Contato:</strong> {contact.user}</p>
                 <p><strong>Nome:</strong> {contact.displayName}</p>

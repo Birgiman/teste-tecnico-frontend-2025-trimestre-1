@@ -44,10 +44,10 @@ export function ContactForm({
   return (
     <form
       onSubmit={handleSubmit(submitHandler)}
-      className='space-y-2 max-w-xs w-full'
+      className='flex items-center justify-center space-y-2 w-full h-screen p-4'
       noValidate
     >
-      <div className='p-2 border rounded-lg dark:border-zinc-50'>
+      <div className='p-2 border rounded-lg border-base-foreground w-full min-w-80 max-w-9/12'>
         <div className='flex items-center justify-between py-2 text-zinc-800 bg-zinc-300 dark:text-zinc-50 dark:bg-zinc-600 px-2 rounded-t-lg'>
           <h2 className='uppercase text-2xl'>Novo contato</h2>
           <ListPlus size={28} />
@@ -73,7 +73,7 @@ export function ContactForm({
           />
           <Button
             variant='primary'
-            className='w-full flex items-center justify-between gap-2 uppercase'
+            className='w-full flex items-center justify-center gap-2 uppercase'
           >
             {isEditing ? 'Salvar alterações' : 'Salvar contato'}
             <Check size={24} weight={'bold'}/>
